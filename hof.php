@@ -47,10 +47,10 @@ require_once 'mod/hof/pages/arrays.php';
 
 <table class='table_menu'>
 <tr>
-  <td style='width: <?php echo $rowWidth; ?>%;'><a style='color: <?php if ($page == 'batiments') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&page=batiments'>Bâtiments</a></td>
+  <td style='width: <?php echo $rowWidth; ?>%;'><a style='color: <?php if ($page == 'batiments') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&page=batiments'>BÃ¢timents</a></td>
   <td style='width: <?php echo $rowWidth; ?>%;'><a style='color: <?php if ($page == 'labo') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&page=labo'>Laboratoire</a></th>
   <td style='width: <?php echo $rowWidth; ?>%;'><a style='color: <?php if ($page == 'flottes') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&page=flottes'>Flottes</a></td>
-  <td style='width: <?php echo $rowWidth; ?>%;'><a style='color: <?php if ($page == 'defense') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&page=defense'>Défense</a></th>
+  <td style='width: <?php echo $rowWidth; ?>%;'><a style='color: <?php if ($page == 'defense') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&page=defense'>DÃ©fense</a></th>
   <td style='width: <?php echo $rowWidth; ?>%;'><a style='color: <?php if ($page == 'prod') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&page=prod'>Production</a></td>
   <td style='width: <?php echo $rowWidth; ?>%;'><a style='color: <?php if ($page == 'bbcode') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&page=bbcode'>Export BBCode</a></td>
   
@@ -77,11 +77,11 @@ switch ($page)
     
     if ($cat == 1)
     {
-      echo '<p style=\'font-weight: bold;\'><a href=\'index.php?action=hof&amp;page=batiments&amp;cat=cumul\'>Voir les records des niveaux cumulés</a></p>';
+      echo '<p style=\'font-weight: bold;\'><a href=\'index.php?action=hof&amp;page=batiments&amp;cat=cumul\'>Voir les records des niveaux cumulÃ©s</a></p>';
     }
     else
     {
-      echo '<p style=\'font-weight: bold;\'><a href=\'index.php?action=hof&amp;page=batiments&amp;cat=nonCumul\'>Voir les records des niveaux non-cumulés</a></p>';
+      echo '<p style=\'font-weight: bold;\'><a href=\'index.php?action=hof&amp;page=batiments&amp;cat=nonCumul\'>Voir les records des niveaux non-cumulÃ©s</a></p>';
     }
     
     break;
@@ -116,9 +116,9 @@ switch ($page)
     createHoF($cat, $labelDefense, $nameDefense, $iconDefense, $userId);
     
     if ($cat == 4)
-      echo '<p style=\'font-weight: bold;\'><a href=\'index.php?action=hof&amp;page=defense&amp;cat=cumul\'>Voir les défenses cumulées</a></p>';
+      echo '<p style=\'font-weight: bold;\'><a href=\'index.php?action=hof&amp;page=defense&amp;cat=cumul\'>Voir les dÃ©fenses cumulÃ©es</a></p>';
     else
-      echo '<p style=\'font-weight: bold;\'><a href=\'index.php?action=hof&amp;page=defense&amp;cat=nonCumul\'>Voir les défenses non-cumulées</a></p>';
+      echo '<p style=\'font-weight: bold;\'><a href=\'index.php?action=hof&amp;page=defense&amp;cat=nonCumul\'>Voir les dÃ©fenses non-cumulÃ©es</a></p>';
     
     break;
   
@@ -140,7 +140,12 @@ switch ($page)
     require_once 'mod/hof/pages/changelog.php';
     break;
 }
+?>
+<div align="right">Hof v1.3.3 - <a href="index.php?action=hof&page=changelog">ChangeLog</a><br />
+  Mod d'affichage des records<br />
+  Version originale par <a href='http://forum.ogsteam.fr/index.php?action=profile;u=98'>Ninety</a> mis Ã  jour par <a href="mailto:contact@alexandre-perrigault.fr">Aerue</a></div>
 
+<?php
 require_once 'views/page_tail.php';
 
 ?>

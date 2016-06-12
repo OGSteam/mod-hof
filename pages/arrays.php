@@ -20,9 +20,6 @@
     'HM',
     'HC',
     'HD',
-    'CM',
-    'CC',
-    'CD',
     'Lab',
     'Ter',
     'DdR',
@@ -32,23 +29,20 @@
     'PoSa');
   
   $nameBatiment = array(
-    'Mine de Métal',
+    'Mine de MÃ©tal',
     'Mine de Cristal',
-    'Synthétiseur de deutérium',
-    'Centrale électrique solaire',
-    'Centrale électrique de fusion',
+    'SynthÃ©tiseur de deutÃ©rium',
+    'Centrale Ã©lectrique solaire',
+    'Centrale Ã©lectrique de fusion',
     'Usine de robots',
     'Usine de nanites ',
     'Chantier spatial',
-    'Hangar de métal',
+    'Hangar de mÃ©tal',
     'Hangar de cristal',
-    'Réservoir de deutérium',
-    'Cachette de métal',
-    'Cachette de cristal',
-    'Cachette de deutérium',
+    'RÃ©servoir de deutÃ©rium',
     'Laboratoire de recherche',
     'Terraformeur',
-    'Dépôt de ravitaillement',
+    'DÃ©pÃ´t de ravitaillement',
     'Silo de missiles',
     'Base Lunaire',
     'Phalange de capteur',
@@ -84,13 +78,13 @@
     'Technologie Protection des vaisseaux spatiaux',
     'Technologie Energie',
     'Technologie Hyperespace',
-    'Réacteur à combustion',
-    'Réacteur à impulsion',
+    'RÃ©acteur Ã  combustion',
+    'RÃ©acteur Ã  impulsion',
     'Propulsion hyperespace',
     'Technologie Laser',
     'Technologie Ions',
     'Technologie Plasma',
-    'Réseau de recherche intergalactique',
+    'RÃ©seau de recherche intergalactique',
     'Technologie Graviton',
     'Astrophysique');
   
@@ -117,7 +111,7 @@
   $nameFlotte = array(
     'Petit Transporteur',
     'Grand Transporteur',
-    'Chasseur Léger',
+    'Chasseur LÃ©ger',
     'Chasseur Lourd',
     'Croiseur',
     'Vaisseau de Bataille',
@@ -146,12 +140,12 @@
   
   $nameDefense = array(
     'Lanceur Missile',
-    'Laser Léger',
+    'Laser LÃ©ger',
     'Laser Lourd',
     'Canon Gauss',
     'Artillerie Ion',
     'Lance Plasma',
     'Missile Interception',
-    'Missile InterPlanétaire');
+    'Missile InterPlanÃ©taire');
 
 ?>
