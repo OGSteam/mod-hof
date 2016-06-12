@@ -15,7 +15,7 @@ else
   $tri = 'm';
 }
 
-$select_userIDs = $db->sql_query('SELECT DISTINCT user_id AS user_id FROM '. TABLE_USER_BUILDING .'');
+$select_userIDs = $db->sql_query('SELECT DISTINCT user_id AS user_id FROM '. TABLE_USER_BUILDING);
 
 while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
 {
@@ -45,7 +45,7 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
   $pseudo = $db->sql_fetch_assoc($select_pseudo);
   $pseudo = $pseudo['user_name'];
   
-  /* Récupération de la technologie energie du joueur */
+  /* Rï¿½cupï¿½ration de la technologie energie du joueur */
   
   $select_NRJ = $db->sql_query('SELECT NRJ FROM '. TABLE_USER_TECHNOLOGY .' WHERE user_id=\''. $userIDs['user_id'] .'\'');
   $NRJ = $db->sql_fetch_assoc($select_NRJ);
@@ -64,7 +64,7 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
     
     if ($users['planet_id'] >= 101 AND $users['planet_id'] <= 200)
     {
-      /* ** Facteur de production = Energie produite / Energie nécessaire ** */
+      /* ** Facteur de production = Energie produite / Energie nï¿½cessaire ** */
       
       /* Energie produite = CES + CEF + Sat */
       
@@ -74,7 +74,7 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
 
       $prodEnergie = floor($cesProd + $cefProd + $satProd);
       
-      /* Energie nécessaire = Metal + Cristal + Deut */
+      /* Energie nï¿½cessaire = Metal + Cristal + Deut */
       
       $metalConso = ceil(($users['M_percentage'] / 100) * 10 * $users['M'] * pow (1.1, $users['M']));
       $cristalConso = ceil(($users['C_percentage'] / 100) * 10 * $users['C'] * pow (1.1, $users['C']));
@@ -123,11 +123,11 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
   
   $select_testPseudo = $db->sql_query('SELECT * FROM '. TABLE_HOF_PROD .' WHERE pseudo=\''. $pseudo .'\'');
   $testPseudo = $db->sql_fetch_assoc($select_testPseudo);
-  
-  if (!empty($testPseudo[0])) // Si le joueur existe
+
+
+  if (!empty($testPseudo['pseudo'])) // Si le joueur existe
   {
     /* On verifie que sa production est superieure a celle deja presente, si oui on met a jour */
-    
     if ($prodMetal > $testPseudo['m'])
       $db->sql_query('UPDATE '. TABLE_HOF_PROD .' SET m=\''. $prodMetal .'\' WHERE pseudo=\''. $pseudo .'\'');
     
@@ -145,7 +145,7 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
 
 /* Recuperation de la config du mod */
 
-$select_config = $db->sql_query('SELECT * FROM '. TABLE_HOF_CONFIG .'');
+$select_config = $db->sql_query('SELECT * FROM '. TABLE_HOF_CONFIG);
 $settings = array();
 
 while ($config = $db->sql_fetch_assoc($select_config))
@@ -155,7 +155,7 @@ while ($config = $db->sql_fetch_assoc($select_config))
 
 /* Affichage de la production */
 
-echo '<p class=\'warningProd\'>Si votre production vous semble incorrecte soyez sûr que la température, le nombre de satellites solaires et le niveau de vos centrales sont correct.</p>';
+echo '<p class=\'warningProd\'>Si votre production vous semble incorrecte soyez sÃ»r que la tempÃ©rature, le nombre de satellites solaires et le niveau de vos centrales sont correct.</p>';
 
 $facteur = $settings['uni50'] ? 2 : 1;
 

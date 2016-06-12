@@ -1,4 +1,5 @@
 <?php
+  global $db;
   // Besoin pour plus tard
   $couleur  = array('aqua', 'black', 'blue', 'fuchsia', 'green', 'grey', 'lime', 'maroon', 'navy', 'olive', 'purple', 'red', 'silver', 'teal', 'white', 'yellow');
   
@@ -26,49 +27,49 @@
     $souligne       = (isset($_POST['souligne']) && $_POST['souligne'] == 'on') ? 1 : 0;
     $italic         = (isset($_POST['italic']) && $_POST['italic'] == 'on') ? 1 : 0;
     
-    $couleurCat     = mysql_real_escape_string (htmlentities ($_POST['couleurCat'], ENT_QUOTES));
+    $couleurCat     = mysqli_real_escape_string(htmlentities ($_POST['couleurCat'], ENT_QUOTES));
     $tailleCat      = (isset($_POST['tailleCat']) && intval($_POST['tailleCat']) > 7) ? intval($_POST['tailleCat']) : 16;
     
-    $couleurLabel   = mysql_real_escape_string (htmlentities ($_POST['couleurLabel'], ENT_QUOTES));
+    $couleurLabel   = mysqli_real_escape_string(htmlentities ($_POST['couleurLabel'], ENT_QUOTES));
     $tailleLabel    = (isset($_POST['tailleLabel']) && intval($_POST['tailleLabel']) > 7) ? intval($_POST['tailleLabel']) : 14;
     
-    $couleurNiv     = mysql_real_escape_string (htmlentities ($_POST['couleurNiv'], ENT_QUOTES));
+    $couleurNiv     = mysqli_real_escape_string(htmlentities ($_POST['couleurNiv'], ENT_QUOTES));
     $tailleNiv      = (isset($_POST['tailleNiv']) && intval($_POST['tailleNiv']) > 7) ? intval($_POST['tailleNiv']) : 16;
     
-    $couleurPseudos = mysql_real_escape_string (htmlentities ($_POST['couleurPseudos'], ENT_QUOTES));
+    $couleurPseudos = mysqli_real_escape_string(htmlentities ($_POST['couleurPseudos'], ENT_QUOTES));
     $taillePseudos  = (isset($_POST['taillePseudos']) && intval($_POST['taillePseudos']) > 7) ? intval($_POST['taillePseudos']) : 14;
-    
+
     // Si la colonne "Vous" n'est pas affichee, il n'y a pas de difference de niveau a faire
     if (!$vous)
       $diff = 0;
     
     /* Insertion dans la BDD */
     
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $vous .'\' WHERE parameter=\'vous\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $diff .'\' WHERE parameter=\'diff\'');
-    
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $uni50 .'\' WHERE parameter=\'uni50\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $heure .'\' WHERE parameter=\'prod_heure\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $jour .'\' WHERE parameter=\'prod_jour\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $semaine .'\' WHERE parameter=\'prod_semaine\'');
-    
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $center .'\' WHERE parameter=\'center\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $couleurCat .'\' WHERE parameter=\'couleurCat\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $tailleCat .'\' WHERE parameter=\'tailleCat\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $gras .'\' WHERE parameter=\'gras\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $souligne .'\' WHERE parameter=\'souligne\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $italic .'\' WHERE parameter=\'italic\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $couleurLabel .'\' WHERE parameter=\'couleurLabel\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $tailleLabel .'\' WHERE parameter=\'tailleLabel\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $couleurNiv .'\' WHERE parameter=\'couleurNiv\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $tailleNiv .'\' WHERE parameter=\'tailleNiv\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $couleurPseudos .'\' WHERE parameter=\'couleurPseudos\'');
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $taillePseudos .'\' WHERE parameter=\'taillePseudos\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $vous .'\' WHERE parameter=\'vous\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $diff .'\' WHERE parameter=\'diff\'');
+
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $uni50 .'\' WHERE parameter=\'uni50\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $heure .'\' WHERE parameter=\'prod_heure\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $jour .'\' WHERE parameter=\'prod_jour\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $semaine .'\' WHERE parameter=\'prod_semaine\'');
+
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $center .'\' WHERE parameter=\'center\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $couleurCat .'\' WHERE parameter=\'couleurCat\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $tailleCat .'\' WHERE parameter=\'tailleCat\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $gras .'\' WHERE parameter=\'gras\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $souligne .'\' WHERE parameter=\'souligne\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $italic .'\' WHERE parameter=\'italic\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $couleurLabel .'\' WHERE parameter=\'couleurLabel\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $tailleLabel .'\' WHERE parameter=\'tailleLabel\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $couleurNiv .'\' WHERE parameter=\'couleurNiv\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $tailleNiv .'\' WHERE parameter=\'tailleNiv\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $couleurPseudos .'\' WHERE parameter=\'couleurPseudos\'');
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $taillePseudos .'\' WHERE parameter=\'taillePseudos\'');
     
     // On verifie que le nombre de personne affichees entre par l'admin n'est pas supperieur au nombre de personne presente dans la BDD
     
-    $select_nbEntrees = mysql_query('SELECT COUNT(DISTINCT user_id) AS nbRM FROM '. TABLE_USER_BUILDING .'');
-    $nbEntrees = mysql_fetch_array($select_nbEntrees);
+    $select_nbEntrees = $db->sql_query('SELECT COUNT(DISTINCT user_id) AS nbRM FROM '. TABLE_USER_BUILDING .'');
+    $nbEntrees = mysqli_fetch_array($select_nbEntrees);
     
     if (isset($_POST['nbRM']))
     {
@@ -79,8 +80,8 @@
     }
     else
       $nbRM = $nbEntrees['nbRM'];
-    
-    mysql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $nbRM .'\' WHERE parameter=\'nb_recordsMen\'');
+
+    $db->sql_query('UPDATE '. TABLE_HOF_CONFIG .' SET value=\''. $nbRM .'\' WHERE parameter=\'nb_recordsMen\'');
     
     /* Reset */
     
@@ -94,18 +95,18 @@
     {
       // Vidage des tables
       fillTableRecords($nameBatiment, $nameLabo, $nameFlotte, $nameDefense);
-      mysql_query('TRUNCATE TABLE '. TABLE_HOF_PROD .'');
+      $db->sql_query('TRUNCATE TABLE '. TABLE_HOF_PROD .'');
     }
     
-    echo '<p class=\'msgOK\'>Changement effectués !</p>';
+    echo '<p class=\'msgOK\'>Changement effectuÃ©s !</p>';
   }
   
   /* On recupere les valeures existante */
   
-  $select_config = mysql_query('SELECT * FROM '. TABLE_HOF_CONFIG .'');
+  $select_config = $db->sql_query('SELECT * FROM '. TABLE_HOF_CONFIG);
   $settings = array();
   
-  while ($config = mysql_fetch_array($select_config))
+  while ($config = mysqli_fetch_array($select_config))
   {
     $settings[$config['parameter']] = $config['value'];
   }
@@ -126,7 +127,7 @@
       <td><input type='checkbox' name='vous' <?php checked ($settings['vous']); ?> /></td>
     </tr>
     <tr>
-      <td>Afficher la différence entre "Max" et "Vous"</td>
+      <td>Afficher la diffÃ©rence entre "Max" et "Vous"</td>
       <td><input type='checkbox' name='diff' <?php checked ($settings['diff']); ?> /></td>
     </tr>
   </table>
@@ -135,7 +136,7 @@
   
   <table class='table_hof' style='width : 500px;'>
     <tr class='tr_admin'>
-      <th colspan='2'>Production Minière</th>
+      <th colspan='2'>Production MiniÃ¨re</th>
     </tr>
     
     <tr>
@@ -151,7 +152,7 @@
       </td>
     </tr>
     <tr>
-      <td>Nombre de personne affichées<br />(0 => tout le monde)</td>
+      <td>Nombre de personne affichÃ©es<br />(0 => tout le monde)</td>
       <td><input type='text' name='nbRM' size='3' value="<?php echo $settings['nb_recordsMen']; ?>" /></td>
     </tr>
   </table>
@@ -170,7 +171,7 @@
       <td><input type='checkbox' name='center' <?php checked ($settings['center']); ?> /></td>
     </tr>
     <tr>
-      <td>Decoration des catégories</td>
+      <td>Decoration des catÃ©gories</td>
       <td>
         <input type='checkbox' name='gras' <?php checked ($settings['gras']); ?> /><label for='gras'> Gras</label>
         <input type='checkbox' name='souligne' <?php checked ($settings['souligne']); ?> /><label for='jour'> Souligne</label>
@@ -178,7 +179,7 @@
       </td>
     </tr>
     <tr>
-      <td>Couleur des catégories</td>
+      <td>Couleur des catÃ©gories</td>
       <td>
         <select name='couleurCat'>
           <?php
@@ -193,7 +194,7 @@
       </td>
     </tr>
     <tr>
-      <td>Taille des catégories (en pixel)</td>
+      <td>Taille des catÃ©gories (en pixel)</td>
       <td><input type='text' name='tailleCat' size='2' value="<?php echo $settings['tailleCat']; ?>" /></td>
     </tr>
     
@@ -272,7 +273,7 @@
     </tr>
     
     <tr>
-      <td style='width : 50%;'>Remettre les options par défaut</td>
+      <td style='width : 50%;'>Remettre les options par dÃ©faut</td>
       <td><input type='checkbox' name='defaultOption' /></td>
     </tr>
     <tr>

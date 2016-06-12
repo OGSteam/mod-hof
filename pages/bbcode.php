@@ -1,10 +1,12 @@
 <?php
+	global $db;
+
 	/* On recupere la configuration */
+
+	$select_config	= $db->sql_query('SELECT * FROM ' . TABLE_HOF_CONFIG);
+	$settings		= array();
 	
-	$select_config	= mysql_query ('SELECT * FROM ' . TABLE_HOF_CONFIG . '');
-	$settings		= array ();
-	
-	while ($config	= mysql_fetch_array ($select_config))
+	while ($config	= mysqli_fetch_array($select_config))
 	{
 		$settings[$config['parameter']] = $config['value'];
 	}
@@ -14,12 +16,12 @@
 	/* Creation des categories */
 	
 	$catTable	= array (
-		'1' => 'Bâtiments',
+		'1' => 'BÃ¢timents',
 		'2' => 'Laboratoire',
 		'3' => 'Flottes',
-		'4' => 'Défense',
-		'5' => 'Bâtiments (Niveaux cumulés)',
-		'6' => 'Défense (Unitées cumulées)');
+		'4' => 'DÃ©fense',
+		'5' => 'BÃ¢timents (Niveaux cumulÃ©s)',
+		'6' => 'DÃ©fense (UnitÃ©es cumulÃ©es)');
 ?>
 
 <textarea rows='25' class='bbcode'><?php
@@ -30,7 +32,7 @@
 	
 	for ($i = 1 ; $i <= 6 ; $i++)
 	{
-		$select_hof	= mysql_query ('SELECT * FROM ' . TABLE_HOF_RECORDS . ' WHERE id_cat=\'' . $i . '\'');
+		$select_hof	= $db->sql_query('SELECT * FROM ' . TABLE_HOF_RECORDS . ' WHERE id_cat=\'' . $i . '\'');
 		
 		$cat		= '[color=' . $settings['couleurCat'] . ']' . $catTable[$i] . '[/color]';
 		
@@ -45,7 +47,7 @@
 		
 		echo $cat . "\n";
 		
-		while ($hof	= mysql_fetch_array ($select_hof))
+		while ($hof	= mysqli_fetch_array($select_hof))
 		{
 			$label   = '[color=' . $settings['couleurLabel'] . ']' . $hof['nom'] . '[/color]';
 			$max     = ' [color=' . $settings['couleurNiv'] . ']' . number_format ($hof['valeur'], 0, ',', ' ') . '[/color] ';
@@ -80,9 +82,9 @@
 		
 		echo $cat . "\n";
 		
-		$select_records	= mysql_query ('SELECT * FROM ' . TABLE_HOF_PROD . ' ORDER BY m DESC LIMIT 0, ' . $settings['nb_recordsMen'] . '');
+		$select_records	= $db->sql_query('SELECT * FROM ' . TABLE_HOF_PROD . ' ORDER BY m DESC LIMIT 0, ' . $settings['nb_recordsMen'] . '');
 		
-		while ($records	= mysql_fetch_array ($select_records))
+		while ($records	= mysqli_fetch_array($select_records))
 		{
 			if ($settings['uni50'])
 			{
@@ -121,9 +123,9 @@
 		
 		/* On affiche les records de production */
 		
-		$select_records	= mysql_query ('SELECT * FROM ' . TABLE_HOF_PROD . ' ORDER BY m DESC LIMIT 0, ' . $settings['nb_recordsMen'] . '');
+		$select_records	= $db->sql_query('SELECT * FROM ' . TABLE_HOF_PROD . ' ORDER BY m DESC LIMIT 0, ' . $settings['nb_recordsMen']);
 		
-		while ($records	= mysql_fetch_array ($select_records))
+		while ($records	= mysqli_fetch_array($select_records))
 		{
 			if ($settings['uni50'])
 			{
@@ -168,9 +170,9 @@
 		
 		/* On affiche les records de production */
 		
-		$select_records	= mysql_query ('SELECT * FROM ' . TABLE_HOF_PROD . ' ORDER BY m DESC LIMIT 0, ' . $settings['nb_recordsMen'] . '');
+		$select_records	= $db->sql_query('SELECT * FROM ' . TABLE_HOF_PROD . ' ORDER BY m DESC LIMIT 0, ' . $settings['nb_recordsMen']);
 		
-		while ($records	= mysql_fetch_array ($select_records))
+		while ($records	= mysqli_fetch_array($select_records))
 		{
 			if ($settings['uni50'])
 			{

@@ -9,8 +9,8 @@
 
     <p>Version 1.0a (23.01.09) :</p>
     <ul>
-      <li>Correction des erreurs générées par E_ALL (Undefined Index).</li>
-      <li>Entrainant une légère modification de la page Administration.</li>
+      <li>Correction des erreurs gÃ©nÃ©rÃ©es par E_ALL (Undefined Index).</li>
+      <li>Entrainant une lÃ©gÃ¨re modification de la page Administration.</li>
       <li>Modification de la page Change Log.</li>
       <li>Bordures arrondies (Change Log et Export BBCode).</li>
     </ul>
@@ -27,11 +27,14 @@
 
     <p>Version 1.3 (Mars 2012) :</p>
     <ul>
-      <li>Mise à jour pour OGSpy 3.1.0.</li>
+      <li>Mise Ã  jour pour OGSpy 3.1.0.</li>
     </ul>
-  </fieldset>
 
-  <p>
-    <a href='http://board.ogsteam.fr/viewtopic.php?id=4714'>Module</a> créer par <a href='http://forum.ogsteam.fr/index.php?action=profile;u=98'>Ninety</a>.
-  </p>
+    <p>Version 1.3.3 - 12/06/2016</p>
+    <ul>
+      <li>Mise Ã  jour pour OGSPy 3.3.0</li>
+      <li>Support de php 7.0.x</li>
+    </ul>
+
+  </fieldset>
 </div>

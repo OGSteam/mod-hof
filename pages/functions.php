@@ -5,23 +5,24 @@
 	
 	function afficherProd($type, $facteur, $tri, $nbRecordsMen)
 	{
+	global $db;
 ?>
 
 <table style='width : 60%; text-align : center; font-weight : bold; margin-bottom : 10px;'>
 	<tr style='line-height : 20px; vertical-align : center;'>
 		<td class='c' style='color : #00F0F0; width : 20%; padding : 3px;'>Production par <?php echo $type; ?></td>
-		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 'm') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=m'>Métal</td>
+		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 'm') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=m'>MÃ©tal</td>
 		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 'c') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=c'>Cristal</td>
-		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 'd') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=d'>Deutérium</td>
+		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 'd') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=d'>DeutÃ©rium</td>
 		<td class='c' style='width : 20%; padding : 3px;'><a style='color : #00F0F0;'>Total</td>
 	</tr>
 	
 	<?php
 		/* On affiche les records de production */
 		
-		$select_records	= mysql_query('SELECT * FROM '. TABLE_HOF_PROD .' ORDER BY '. $tri .' DESC LIMIT 0, '. $nbRecordsMen .'') or die(mysql_error());
+		$select_records	= $db->sql_query('SELECT * FROM '. TABLE_HOF_PROD .' ORDER BY '. $tri .' DESC LIMIT 0, '. $nbRecordsMen .'') or die(mysql_error());
 		
-		while ($records	= mysql_fetch_array($select_records))
+		while ($records	= mysqli_fetch_assoc($select_records))
 		{
 			$total = $facteur * ($records['m'] + $records['c'] + $records['d']);
 	?>
@@ -50,12 +51,13 @@
 	
 	function createHoF ($category, $label, $name, $icon, $user_id)
 	{
+	    global $db;
+
 		/* On recupere les valeures existante */
-	
-		$select_config	= mysql_query ('SELECT * FROM ' . TABLE_HOF_CONFIG . '');
+		$select_config	= $db->sql_query('SELECT * FROM ' . TABLE_HOF_CONFIG);
 		$settings		= array ();
 		
-		while ($config	= mysql_fetch_array ($select_config))
+		while ($config	= mysqli_fetch_array($select_config))
 		{
 			$settings[$config['parameter']] = $config['value'];
 		}
@@ -71,12 +73,12 @@
 			'6' => TABLE_USER_DEFENCE);
 		
 		$catTable	= array(
-			'1' => 'Bâtiments',
+			'1' => 'BÃ¢timents',
 			'2' => 'Laboratoire',
 			'3' => 'Flottes',
-			'4' => 'Défense',
-			'5' => 'Bâtiments',
-			'6' => 'Défense');
+			'4' => 'DÃ©fense',
+			'5' => 'BÃ¢timents',
+			'6' => 'DÃ©fense');
 		
 		$items = count($label); // Nombre de batiments, labo, ...
 		
@@ -107,59 +109,59 @@
 		for ($i = 0 ; $i < $items ; $i++)
 		{
 			/* On selectionne la valeur maximum actuel */
-			
+
 			if ($category == 3 OR $category == 5 OR $category == 6)
 			{
-				$select_max	= mysql_query (
+				$select_max	= $db->sql_query (
 					'SELECT SUM(' . $label[$i] . ') AS ' . $label[$i] . ', user_id
 					FROM ' . $mysqlTable[$category] . '
 					GROUP BY user_id
-					ORDER BY ' . $label[$i] . ' DESC') or die (mysql_error ());
+					ORDER BY ' . $label[$i] . ' DESC') or die (mysqli_error());
 				
 				if ($settings['vous'])
 				{
-					$select_nivUser	= mysql_query (
+					$select_nivUser	= $db->sql_query (
 						'SELECT SUM(' . $label[$i] . ') AS ' . $label[$i] . '
 						FROM ' . $mysqlTable[$category] . '
-						WHERE user_id=\'' . $user_id . '\'') or die (mysql_error ());
+						WHERE user_id=\'' . $user_id . '\'') or die (mysqli_error());
 				}
 			}
 			else
 			{
-				$select_max	= mysql_query (
+				$select_max	= $db->sql_query (
 					'SELECT ' . $label[$i] . '
 					FROM ' . $mysqlTable[$category] . '
-					ORDER BY ' . $label[$i] . ' DESC') or die (mysql_error ());
+					ORDER BY ' . $label[$i] . ' DESC') or die (mysqli_error());
 				
 				if ($settings['vous'])
 				{
-					$select_nivUser	= mysql_query (
+					$select_nivUser	= $db->sql_query (
 						'SELECT ' . $label[$i] . '
 						FROM ' . $mysqlTable[$category] . '
 						WHERE user_id=\'' . $user_id . '\'
-						ORDER BY ' . $label[$i] . ' DESC') or die (mysql_error ());
+						ORDER BY ' . $label[$i] . ' DESC') or die (mysqli_error());
 				}
 			}
 			
 			if ($settings['vous'])
 			{
-				$nivUser	= mysql_fetch_array ($select_nivUser);
+				$nivUser	= mysqli_fetch_array($select_nivUser);
 				$nivUser	= $nivUser[0];
 			}
 			
-			$max		= mysql_fetch_array ($select_max);
+			$max		= mysqli_fetch_array($select_max);
 			$IdFlottes	= $max; // Besoin pour apres, pseudo des recordsmen de flotte
 			
 			$valMax		= $max[0]; // Valeur maximum
 			
 			/* On selectionne la valeur maximum deja enregistrer dans la table */
 			
-			$select_max	= mysql_query (
+			$select_max	= $db->sql_query (
 				'SELECT valeur
 				FROM ' . TABLE_HOF_RECORDS . '
 				WHERE nom=\'' . $name[$i] . '\'');
 			
-			$max		= mysql_fetch_array ($select_max);
+			$max		= mysqli_fetch_array ($select_max);
 			$currentMax = $max[0];
 			
 			/* On compare ces deux valeurs :
@@ -173,23 +175,23 @@
 				
 				if ($category == 3 OR $category == 5 OR $category == 6)
 				{
-					$select_userName	= mysql_query (
+					$select_userName	= $db->sql_query (
 						'SELECT user_name
 						FROM ' . TABLE_USER . '
-						WHERE user_id=\'' . $IdFlottes[1] . '\'') or die (mysql_error ());
+						WHERE user_id=\'' . $IdFlottes[1] . '\'') or die (mysqli_error ());
 				}
 				else
 				{
-					$select_userName	= mysql_query (
+					$select_userName	= $db->sql_query (
 						'SELECT DISTINCT ' . TABLE_USER . '.user_name
 						FROM ' . TABLE_USER . ', ' . $mysqlTable[$category] . '
 						WHERE ' . TABLE_USER . '.user_id=' . $mysqlTable[$category] . '.user_id
-						AND ' . $label[$i] . '=\'' . $valMax . '\'') or die (mysql_error ());
+						AND ' . $label[$i] . '=\'' . $valMax . '\'') or die (mysqli_error ());
 				}
 				
 				$userNames = ''; // Initialisation obligatoire car on est dans la boucle for !
 				
-				while ($userName = mysql_fetch_array ($select_userName))
+				while ($userName = mysqli_fetch_array ($select_userName))
 				{
 					if ($userNames == '')
 						$userNames = $userName[0];
@@ -202,16 +204,16 @@
 				
 				/* On met a jour */
 				
-				mysql_query (
+				$db->sql_query (
 					'UPDATE ' . TABLE_HOF_RECORDS . '
 					SET valeur=\'' . $valMax . '\', pseudos=\'' . $userNames . '\'
-					WHERE id_cat=\'' . $category . '\' AND nom=\'' . $name[$i] . '\'') or die (mysql_error ());
+					WHERE id_cat=\'' . $category . '\' AND nom=\'' . $name[$i] . '\'') or die (mysqli_error ());
 			}
 			
 			/* On affiche nos records, a partir de la table =) */
 			
-			$select_records	= mysql_query ('SELECT valeur, pseudos FROM ' . TABLE_HOF_RECORDS . ' WHERE id_cat=\'' . $category . '\' AND  nom=\'' . $name[$i] . '\'');
-			$records		= mysql_fetch_array ($select_records);
+			$select_records	= $db->sql_query ('SELECT valeur, pseudos FROM ' . TABLE_HOF_RECORDS . ' WHERE id_cat=\'' . $category . '\' AND  nom=\'' . $name[$i] . '\'');
+			$records		= mysqli_fetch_array ($select_records);
 			
 			/* Separation des milliers si Flottes OU Defense */
 			
@@ -267,9 +269,10 @@
 	
 	function fillTableConfig ()
 	{
-		mysql_query('TRUNCATE TABLE '. TABLE_HOF_CONFIG .'');
+	    global $db;
+		$db->sql_query('TRUNCATE TABLE '. TABLE_HOF_CONFIG .'');
 		
-		mysql_query('INSERT INTO '. TABLE_HOF_CONFIG .' VALUES
+		$db->sql_query('INSERT INTO '. TABLE_HOF_CONFIG .' VALUES
 			(\'vous\', \'1\'),
 			(\'diff\', \'1\'),
 			(\'img\', \'0\'),
@@ -301,30 +304,31 @@
 	
 	function fillTableRecords ($batiments, $labo, $flottes, $defense)
 	{
-		mysql_query('TRUNCATE TABLE '. TABLE_HOF_RECORDS .'');
+	    global $db;
+		$db->sql_query('TRUNCATE TABLE '. TABLE_HOF_RECORDS .'');
 		
 		// Batiments
 		foreach ($batiments as $name)
-			mysql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'1\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'1\', \''. $name .'\', \'\', \'\')');
 		
 		// Laboratoire
 		foreach ($labo as $name)
-			mysql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'2\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'2\', \''. $name .'\', \'\', \'\')');
 		
 		// Flottes
 		foreach ($flottes as $name)
-			mysql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'3\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'3\', \''. $name .'\', \'\', \'\')');
 		
 		// Defense
 		foreach ($defense as $name)
-			mysql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'4\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'4\', \''. $name .'\', \'\', \'\')');
 		
 		// Batiments cumules
 		foreach ($batiments as $name)
-			mysql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'5\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'5\', \''. $name .'\', \'\', \'\')');
 		
 		// Defense cumules
 		foreach ($defense as $name)
-			mysql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'6\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'6\', \''. $name .'\', \'\', \'\')');
 	}
 ?>
