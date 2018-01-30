@@ -143,7 +143,7 @@ switch ($page)
 ?>
 <div align="right">Hof v1.3.3 - <a href="index.php?action=hof&page=changelog">ChangeLog</a><br />
   Mod d'affichage des records<br />
-  Version originale par <a href='http://forum.ogsteam.fr/index.php?action=profile;u=98'>Ninety</a> mis à jour par <a href="mailto:contact@alexandre-perrigault.fr">Aerue</a></div>
+  Version originale par <a href='https://forum.ogsteam.fr/index.php?action=profile;u=98'>Ninety</a> mis à jour par <a href="mailto:contact@alexandre-perrigault.fr">Aerue</a> et Pumpk1in</div>
 
 <?php
 require_once 'views/page_tail.php';

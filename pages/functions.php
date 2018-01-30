@@ -14,7 +14,7 @@
 		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 'm') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=m'>Métal</td>
 		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 'c') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=c'>Cristal</td>
 		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 'd') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=d'>Deutérium</td>
-		<td class='c' style='width : 20%; padding : 3px;'><a style='color : #00F0F0;'>Total</td>
+		<td class='c' style='width : 20%; padding : 3px;'><a style='color : <?php if ($tri == 't') { echo 'lime;'; } else { echo '#00F0F0;'; } ?>' href='index.php?action=hof&amp;page=prod&amp;tri=t'>Total</td>
 	</tr>
 	
 	<?php

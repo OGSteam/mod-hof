@@ -2,7 +2,11 @@
 
 $debug = 0;
 
-if (isset($_GET['tri']) && $_GET['tri'] == 'c')
+if (isset($_GET['tri']) && $_GET['tri'] == 'm')
+{
+  $tri = 'm';
+}
+else if (isset($_GET['tri']) && $_GET['tri'] == 'c')
 {
   $tri = 'c';
 }
@@ -12,7 +16,7 @@ else if (isset($_GET['tri']) && $_GET['tri'] == 'd')
 }
 else
 {
-  $tri = 'm';
+  $tri = 't';
 }
 
 $select_userIDs = $db->sql_query('SELECT DISTINCT user_id AS user_id FROM '. TABLE_USER_BUILDING);
@@ -50,6 +54,11 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
   $select_NRJ = $db->sql_query('SELECT NRJ FROM '. TABLE_USER_TECHNOLOGY .' WHERE user_id=\''. $userIDs['user_id'] .'\'');
   $NRJ = $db->sql_fetch_assoc($select_NRJ);
   $NRJ = $NRJ['NRJ'];
+
+  /* Techno plasma pour éviter des valeurs à l'ouest */
+  $select_PLASMA = $db->sql_query('SELECT Plasma FROM '. TABLE_USER_TECHNOLOGY .' WHERE user_id=\''. $userIDs['user_id'] .'\'');
+  $PLASMA = $db->sql_fetch_assoc($select_PLASMA);
+  $PLASMA = $PLASMA['Plasma'];
   
   // Debug ...
   if ($debug)
@@ -96,10 +105,16 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
       // Consomation de deut par la CEF        
       $cefConso = ($users['CEF_percentage'] / 100) * 10 * $users['CEF'] * pow (1.1, $users['CEF']);
       
-      $prodMetal += 30 + $prodFacteur * floor (($users['M_percentage'] / 100) * (30 * $users['M'] * pow (1.1, $users['M'])));
+      $prodMetal += 30 + $prodFacteur * floor ( ($users['M_percentage'] / 100) * (30 * $users['M'] * pow (1.1, $users['M'])) );
       $prodCristal += 15 + $prodFacteur * floor (($users['C_percentage'] / 100) * (20 * $users['C'] * pow (1.1, $users['C'])));
       $prodDeut += $prodFacteur * floor(($users['D_percentage'] / 100) * (10 * $users['D'] * pow (1.1, $users['D']) * (1.44 - 0.004 * $users['temperature_max']))) - $cefConso;
-      
+
+      //Ajout du bonus plasma
+      $prodMetal += ($PLASMA * 1) * floor ( (30 * $users['M'] * pow (1.1, $users['M'])) ) / 100;
+      $prodCristal += ($PLASMA * 0.66) * floor ( (20 * $users['C'] * pow (1.1, $users['C'])) ) / 100;
+      $prodDeut += ($PLASMA * 0.33) * floor ( (10 * $users['D'] * pow (1.1, $users['D']) * (1.44 - 0.004 * $users['temperature_max'])) ) / 100;
+    
+
       // Debug ...
       if ($debug)
       {
@@ -124,6 +139,7 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
   $select_testPseudo = $db->sql_query('SELECT * FROM '. TABLE_HOF_PROD .' WHERE pseudo=\''. $pseudo .'\'');
   $testPseudo = $db->sql_fetch_assoc($select_testPseudo);
 
+  $totalProd = floor ($prodMetal + $prodCristal + $prodDeut);
 
   if (!empty($testPseudo['pseudo'])) // Si le joueur existe
   {
@@ -136,10 +152,13 @@ while ($userIDs = $db->sql_fetch_assoc($select_userIDs))
     
     if ($prodDeut > $testPseudo['d'])
       $db->sql_query('UPDATE '. TABLE_HOF_PROD .' SET d=\''. $prodDeut .'\' WHERE pseudo=\''. $pseudo .'\'');
+
+    if ($totalProd > $testPseudo['t'])
+      $db->sql_query('UPDATE '. TABLE_HOF_PROD .' SET t=\''. $totalProd .'\' WHERE pseudo=\''. $pseudo .'\'');
   }
   else // Le joueur n'existe pas
   {
-    $db->sql_query('INSERT INTO '. TABLE_HOF_PROD .' VALUES (\''. $pseudo .'\', \''. $prodMetal .'\', \''. $prodCristal .'\', \''. $prodDeut .'\')');
+    $db->sql_query('INSERT INTO '. TABLE_HOF_PROD .' VALUES (\''. $pseudo .'\', \''. $prodMetal .'\', \''. $prodCristal .'\', \''. $prodDeut .'\', \''. $totalProd .'\')');
   }
 }
 
@@ -155,7 +174,8 @@ while ($config = $db->sql_fetch_assoc($select_config))
 
 /* Affichage de la production */
 
-echo '<p class=\'warningProd\'>Si votre production vous semble incorrecte soyez sûr que la température, le nombre de satellites solaires et le niveau de vos centrales sont correct.</p>';
+echo '<p class=\'warningProd\'>Si votre production vous semble incorrecte soyez sûr que la température, le nombre de satellites solaires et le niveau de vos centrales sont correct.<br>
+Aussi, la production de deut d\'infocompte est FAUSSE, elle oublie de retrancher la consommation de vos CEF.</p>';
 
 $facteur = $settings['uni50'] ? 2 : 1;
 
