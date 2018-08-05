@@ -1,4 +1,4 @@
 HoF
-1.3.4
+1.3.5
 hof,Hall of Fame,hof,hof,hof.php,1,0
 3.3.2

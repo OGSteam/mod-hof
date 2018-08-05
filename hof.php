@@ -104,7 +104,7 @@ switch ($page)
     }
     else
     {
-      echo '<p style=\'color: red; font-weight: bold;\'>Vous devez installer le mod <a href=\'http://ogsteam.fr/sujet-1858-mod-flottes\'>Flottes</a> !</p>';
+      echo '<p style=\'color: red; font-weight: bold;\'>Vous devez installer le mod <a href=\'https://forum.ogsteam.fr\'>Flottes</a> !</p>';
     }
     
     break;

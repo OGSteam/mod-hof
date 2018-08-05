@@ -27,16 +27,16 @@
     $souligne       = (isset($_POST['souligne']) && $_POST['souligne'] == 'on') ? 1 : 0;
     $italic         = (isset($_POST['italic']) && $_POST['italic'] == 'on') ? 1 : 0;
     
-    $couleurCat     = mysqli_real_escape_string(htmlentities ($_POST['couleurCat'], ENT_QUOTES));
+    $couleurCat     =  $db->sql_escape_string(htmlentities ($_POST['couleurCat'], ENT_QUOTES));
     $tailleCat      = (isset($_POST['tailleCat']) && intval($_POST['tailleCat']) > 7) ? intval($_POST['tailleCat']) : 16;
     
-    $couleurLabel   = mysqli_real_escape_string(htmlentities ($_POST['couleurLabel'], ENT_QUOTES));
+    $couleurLabel   = $db->sql_escape_string(htmlentities ($_POST['couleurLabel'], ENT_QUOTES));
     $tailleLabel    = (isset($_POST['tailleLabel']) && intval($_POST['tailleLabel']) > 7) ? intval($_POST['tailleLabel']) : 14;
     
-    $couleurNiv     = mysqli_real_escape_string(htmlentities ($_POST['couleurNiv'], ENT_QUOTES));
+    $couleurNiv     = $db->sql_escape_string(htmlentities ($_POST['couleurNiv'], ENT_QUOTES));
     $tailleNiv      = (isset($_POST['tailleNiv']) && intval($_POST['tailleNiv']) > 7) ? intval($_POST['tailleNiv']) : 16;
     
-    $couleurPseudos = mysqli_real_escape_string(htmlentities ($_POST['couleurPseudos'], ENT_QUOTES));
+    $couleurPseudos = $db->sql_escape_string(htmlentities ($_POST['couleurPseudos'], ENT_QUOTES));
     $taillePseudos  = (isset($_POST['taillePseudos']) && intval($_POST['taillePseudos']) > 7) ? intval($_POST['taillePseudos']) : 14;
 
     // Si la colonne "Vous" n'est pas affichee, il n'y a pas de difference de niveau a faire
@@ -68,8 +68,8 @@
     
     // On verifie que le nombre de personne affichees entre par l'admin n'est pas supperieur au nombre de personne presente dans la BDD
     
-    $select_nbEntrees = $db->sql_query('SELECT COUNT(DISTINCT user_id) AS nbRM FROM '. TABLE_USER_BUILDING .'');
-    $nbEntrees = mysqli_fetch_array($select_nbEntrees);
+    $select_nbEntrees = $db->sql_query('SELECT COUNT(DISTINCT user_id) AS nbRM FROM '. TABLE_USER_BUILDING);
+    $nbEntrees = $db->sql_fetch_row($select_nbEntrees);
     
     if (isset($_POST['nbRM']))
     {

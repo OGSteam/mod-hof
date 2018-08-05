@@ -309,26 +309,25 @@
 		
 		// Batiments
 		foreach ($batiments as $name)
-			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'1\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' (`id_cat`, `nom`, `valeur`, `pseudos`) VALUES (\'1\', \''. $name .'\', \'0\', \'\')');
 		
 		// Laboratoire
 		foreach ($labo as $name)
-			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'2\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' (`id_cat`, `nom`, `valeur`, `pseudos`) VALUES (\'2\', \''. $name .'\', \'0\', \'\')');
 		
 		// Flottes
 		foreach ($flottes as $name)
-			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'3\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' (`id_cat`, `nom`, `valeur`, `pseudos`) VALUES (\'3\', \''. $name .'\', \'0\', \'\')');
 		
 		// Defense
 		foreach ($defense as $name)
-			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'4\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' (`id_cat`, `nom`, `valeur`, `pseudos`) VALUES (\'4\', \''. $name .'\', \'0\', \'\')');
 		
 		// Batiments cumules
 		foreach ($batiments as $name)
-			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'5\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' (`id_cat`, `nom`, `valeur`, `pseudos`) VALUES (\'5\', \''. $name .'\', \'0\', \'\')');
 		
 		// Defense cumules
 		foreach ($defense as $name)
-			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' VALUES (\'\', \'6\', \''. $name .'\', \'\', \'\')');
+			$db->sql_query('INSERT INTO '. TABLE_HOF_RECORDS .' (`id_cat`, `nom`, `valeur`, `pseudos`) VALUES (\'6\', \''. $name .'\', \'0\', \'\')');
 	}
-?>
